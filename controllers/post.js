@@ -1,5 +1,6 @@
 import Post from "../Model/Post.js";
 import User from "../Model/user.js";
+import Comment from '../Model/comments.js';
 
 export const createPost=async(req,res)=>{
      try{
@@ -65,5 +66,44 @@ export const likePost=async(req,res)=>{
          res.status(404).json({message:error.message});
  
      }
+
+}
+
+export const postComment=async(req,res)=>{
+    
+    try{
+        console.log("here!!!")
+        const {postId,comment,userId,firstName,lastName}=req.body;
+        const post= await Post.findById(postId);
+        const com= new Comment({
+            userId,
+            comment,
+            userName:`${firstName} ${lastName}`
+
+        });
+        await com.save();
+        post.comments.push(com._id);
+        await post.save();
+        res.status(200).json(post);
+
+    }catch(error){
+        res.status(404).json({message:error.message});
+    }
+
+
+
+}
+export const getPostComment=async(req,res)=>{
+    try{
+        const {commentId}=req.params;
+        console.log(commentId);
+        const comment=await Comment.findById(commentId);
+        console.log(comment);
+        
+        res.status(200).json(comment);
+        
+    }catch(error){
+        res.status(404).json({message:error.message});
+    }
 
 }

@@ -67,3 +67,25 @@ export const addRemoveFriends=async(req,res)=>{
 
     }
 }
+export const getUsers=async(req,res)=>{
+    try{
+        const {searchValue}=req.params;
+        const search=searchValue.split(' ');
+        let query;
+        if(search.length==1){
+            query={firstName:search[0]};
+
+        }else{
+            query={firstName:search[0],lastName:search[1]};
+        }
+        console.log(query);
+        const users=await User.find(query);
+        console.log(users);
+        res.status(200).json(users);
+        
+
+    }catch(error){
+        console.log('error')
+        res.status(404).json({mesaage:error.mesaage});
+    }
+}
