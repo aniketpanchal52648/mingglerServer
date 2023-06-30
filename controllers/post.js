@@ -12,12 +12,15 @@ export const createPost=async(req,res)=>{
             lastName:user.lastName,
             location:user.location,
             userPicturePath:user.picturePath,
+            description,
             picturePath:req.file.path,
             likes:{},
             comments:[]
         });
         await newPost.save()
-        const post =await Post.find();
+        
+        const post =await Post.find().sort({'createdAt':-1});
+        // console.log(post);
         res.status(201).json(post);
 
 
@@ -27,7 +30,8 @@ export const createPost=async(req,res)=>{
 }
 export const getFeedPost=async(req,res)=>{
     try{
-        const post =await Post.find();
+        const post =await Post.find().sort({ 'createdAt':-1});
+        // console.log(post);
         res.status(200).json(post);
     }catch(error){
         res.status(404).json({message:error.message});

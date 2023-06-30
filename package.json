@@ -26,6 +26,7 @@
     "multer-gridfs-storage": "^5.0.2",
     "multer-storage-cloudinary": "^4.0.0",
     "nodemon": "^2.0.22",
-    "npx": "^10.2.2"
+    "npx": "^10.2.2",
+    "socket.io": "^4.7.0"
   }
 }
